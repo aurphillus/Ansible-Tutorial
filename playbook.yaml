@@ -1,0 +1,14 @@
+- hosts: web
+  remote_user: root
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Remove Nginx
+      apt:
+        name: nginx
+        state: absent
+        purge: yes
