@@ -1,0 +1,33 @@
+# 1. Update all packages on the server
+# 2. Install Nginx
+# 3. Create an html page using this command:
+#     echo "Hello from the ansible challenge" > /var/www/nginx-default/index.nginx-debian.html
+# 4. Reload Nginx
+# 5. Get the public ip address of the server
+
+- hosts: web
+  remote_user: root
+  become: yes
+  tasks:
+    - name: Update All Packages
+      apt:
+        update_cache: yes
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Change WebPage
+      shell: 
+        cmd: echo "Hello from the ansible challenge" > /var/www/html/index.nginx-debian.html
+      args:
+        executable: /bin/bash
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+    - name: Get Public IP Adress
+      shell:
+        cmd: curl http://169.254.169.254/latest/meta-data/public-ipv4
+      register: curl
+    - name: Display Public IP Address
+      debug: var=curl.stdout_lines
