@@ -1,0 +1,23 @@
+- hosts: web
+  remote_user: root
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      notify:
+        - Restart Nginx
+    - name: Install nano
+      apt:
+        name: nano
+        state: present
+    - name: Install vim
+      apt:
+        name: vim
+        state: present  
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: reloaded
