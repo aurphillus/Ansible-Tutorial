@@ -1,0 +1,21 @@
+- hosts: web
+  remote_user: root
+  become: yes
+  vars:
+    packages:
+      - nginx
+      - nano
+      - vim
+  tasks:
+    - name: Install Software
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop: "{{ packages }}"
+    - name: Remove Software
+      apt:
+        name: "{{ item }}"
+        state: absent
+        purge: yes
+      loop: "{{ packages }}"
