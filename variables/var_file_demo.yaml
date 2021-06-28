@@ -1,0 +1,8 @@
+- hosts: localhost
+  tasks:
+  - name: Display Value 1
+    debug:
+      msg: "{{ http_port }}"
+  - name: Display Value 2
+    debug:
+      msg: "{{ server_name }}"
